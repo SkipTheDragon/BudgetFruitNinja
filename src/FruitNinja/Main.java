@@ -1,16 +1,25 @@
 package FruitNinja;
 
+import FruitNinja.Menus.MainMenu;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
-public class Main extends JPanel {
+public class Main {
     public static Dimension windowSize = new Dimension(500, 500);
+    public static Container contentPane;
 
     public static void main(String[] args) {
         JFrame jFrame = new JFrame("Fruit Ninja");
+        Game.getStatus().setContentPane(jFrame.getContentPane());
 
+        MainMenu mainMenu = new MainMenu();
+        mainMenu.buildUi();
+
+
+        jFrame.add(mainMenu);
         jFrame.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
@@ -32,7 +41,10 @@ public class Main extends JPanel {
 // Patterns chosen and their purposes
 
 // Factory Method for creating models(fruits,bombs, etc.)
-// Singleton for having access to game ongoing events
+// Singleton for having access to game ongoing events  -- implemented
+// Game Loop -- implemented
+// Builder for menu creation
 
 
 // State for MovingObjects moving animations
+// Observer

@@ -2,67 +2,37 @@ package FruitNinja.Scenes;
 
 import FruitNinja.Models.Fruit;
 import FruitNinja.Models.MovingObject;
-import FruitNinja.Models.NeutralMovingObject;
 
 import javax.swing.*;
-import java.util.Random;
+import java.awt.*;
+import java.util.ArrayList;
 
 public abstract class Scene extends JPanel {
+    public ArrayList<MovingObject> objects = new ArrayList<>();
 
-    protected volatile Status status;
-
-    private Thread gameThread;
-
-    public Scene() {
-        status = Status.STOPPED;
+    public void addToScene(MovingObject object) {
+        objects.add(object);
     }
 
-    public void run() {
-        status = Status.RUNNING;
-        gameThread = new Thread(this::update);
-        gameThread.start();
-    }
-
-    public void stop() {
-        status = Status.STOPPED;
-    }
-
-    public boolean isGameRunning() {
-        return status == Status.RUNNING;
-    }
-
-    protected void processInput() {
-        try {
-            var lag = new Random().nextInt(200) + 50;
-            Thread.sleep(lag);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
-
-    protected abstract void update();
-
-    protected void render() {
-        repaint();
-        revalidate();
-    }
-
-    protected void process() {
-        while (isGameRunning()) {
-            processInput();
-            update();
-            render();
-        }
-    }
-
+    // Factory method for MovingObjects
     public MovingObject getModel(String object) throws NullPointerException {
         if (object.equals("Fruit")) {
-            return new Fruit(); // TODO: 16/12/2020 change later
+            return new Fruit();
         }
         return null;
     }
 
-    enum Status {
-        RUNNING, STOPPED
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        Graphics2D g2d = (Graphics2D) g;
+
+        for (MovingObject object : objects) {
+            object.draw(g2d);
+        }
     }
+
+    abstract public void update(long elapsedTime);
+    abstract public void updateAtFixedRate();
+    abstract public void buildScene();
 }

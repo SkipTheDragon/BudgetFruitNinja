@@ -16,6 +16,64 @@ public abstract class MovingObject extends JLabel {
     // object's spawn point
     Point spawnPoint;
 
+    private Point location = new Point(30, 50);
+
+    private Dimension proportions = new Dimension(100,100);
+
+    @Override
+    public Point getLocation() {
+        return location;
+    }
+
+    @Override
+    public void setLocation(Point location) {
+        this.location = location;
+    }
+
+    public Dimension getProportions() {
+        return proportions;
+    }
+
+    public void setProportions(Dimension proportions) {
+        this.proportions = proportions;
+    }
+
+    @Override
+    public int getX() {
+        return location.x;
+    }
+
+    public void setX(int x) {
+        this.setLocation(new Point(x, getLocation().y));
+    }
+
+    @Override
+    public int getY() {
+        return location.y;
+    }
+
+    public void setY(int y) {
+        this.setLocation(new Point(getLocation().x, y));
+    }
+
+    @Override
+    public int getWidth() {
+        return proportions.width;
+    }
+
+    public void setWidth(int width) {
+        this.setProportions(new Dimension(width, getProportions().height));
+    }
+
+    @Override
+    public int getHeight() {
+        return proportions.height;
+    }
+
+    public void setHeight(int height) {
+        this.setProportions(new Dimension(getProportions().width, height));
+    }
+
     public void startMoving() {
         if (getY() < maxHeight) {
             propel();
@@ -32,10 +90,10 @@ public abstract class MovingObject extends JLabel {
 
     }
 
-    void loadImage(String imagePath) throws IOException {
+    public void loadImage(String imagePath) throws IOException {
         this.img = ImageIO.read(new File(imagePath));
     }
 
-    public abstract void paint(Graphics g);
+    public abstract void draw(Graphics2D g);
 }
 

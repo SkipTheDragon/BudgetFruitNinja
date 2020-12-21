@@ -18,7 +18,6 @@ public class Main {
         MainMenu mainMenu = new MainMenu();
         mainMenu.buildUi();
 
-
         jFrame.add(mainMenu);
         jFrame.addWindowListener(new WindowAdapter() {
             @Override
@@ -40,11 +39,9 @@ public class Main {
 
 // Patterns chosen and their purposes
 
-// Factory Method for creating models(fruits,bombs, etc.)
+// Factory Method for creating models(fruits,bombs, etc.) -- partial implementation
 // Singleton for having access to game ongoing events  -- implemented
 // Game Loop -- implemented
-// Builder for menu creation
-
 
 // State for MovingObjects moving animations
 // Observer

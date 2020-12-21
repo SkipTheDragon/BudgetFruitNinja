@@ -1,5 +1,8 @@
 package FruitNinja;
 
+import FruitNinja.Models.Fruit;
+import FruitNinja.Models.MovingObject;
+
 import java.awt.*;
 
 public final class Game {
@@ -80,4 +83,5 @@ public final class Game {
             return instance;
         }
     }
+
 }

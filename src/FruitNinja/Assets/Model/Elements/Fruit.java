@@ -27,11 +27,6 @@ public class Fruit extends GameObject implements ModelFamily {
     }
 
     @Override
-    public Type getGameObjectType() {
-        return null;
-    }
-
-    @Override
     public void update() {
         x += velX;
         y += velY;

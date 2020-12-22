@@ -39,12 +39,12 @@ public class Window {
 
 // Patterns chosen and their purposes
 
-// Factory Method for creating models(fruits,bombs, etc.) -- partial implementation
+// Abstract Factory for creating Assets (fruits,bombs, etc.)-- implemented
 // Singleton for having access to game ongoing events  -- implemented
 // Game Loop -- implemented
+// Update Method -- implemented
 
-// State for MovingObjects moving animations
-// Observer
+// Memento for replay
 // Bridge
 
 /*

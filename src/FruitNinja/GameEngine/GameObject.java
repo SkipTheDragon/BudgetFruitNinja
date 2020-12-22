@@ -7,12 +7,8 @@ public abstract class GameObject {
     protected Image texture = null;
     protected float x, y;
     protected float width,height;
-
     protected float velX, velY;
-
-    public enum Type {
-        HUD,Model
-    };
+    protected int updateRate;
 
     public float getWidth() {
         return width;
@@ -68,8 +64,6 @@ public abstract class GameObject {
 
     public abstract Image getTexture() throws IOException;
     public abstract void draw(Graphics2D g);
-    public abstract Type getGameObjectType();
     public abstract void update();
-
 }
 

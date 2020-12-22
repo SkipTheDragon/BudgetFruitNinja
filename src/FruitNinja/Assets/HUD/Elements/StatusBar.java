@@ -21,11 +21,6 @@ public class StatusBar extends GameObject implements HUDFamily {
     }
 
     @Override
-    public Type getGameObjectType() {
-        return null;
-    }
-
-    @Override
     public void update() {
 
     }

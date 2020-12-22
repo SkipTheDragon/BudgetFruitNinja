@@ -4,6 +4,7 @@ import FruitNinja.Assets.AbstractFactory;
 import FruitNinja.Assets.HUD.HUDFactory;
 import FruitNinja.Assets.Model.Elements.Fruit;
 import FruitNinja.Assets.Model.ModelFactory;
+import FruitNinja.Game;
 import FruitNinja.GameEngine.GameObject;
 
 import javax.swing.*;
@@ -16,6 +17,10 @@ public abstract class Scene extends JPanel {
 
     protected void addToScene(GameObject object) {
         objects.add(object);
+    }
+
+    protected void removeFromScene(GameObject object) {
+        objects.remove(object);
     }
 
     public static AbstractFactory getFactory(String choice){

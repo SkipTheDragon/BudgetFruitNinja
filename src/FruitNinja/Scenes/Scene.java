@@ -1,24 +1,32 @@
 package FruitNinja.Scenes;
 
-import FruitNinja.Models.Fruit;
-import FruitNinja.Models.MovingObject;
+import FruitNinja.Assets.AbstractFactory;
+import FruitNinja.Assets.HUD.HUDFactory;
+import FruitNinja.Assets.Model.Elements.Fruit;
+import FruitNinja.Assets.Model.ModelFactory;
+import FruitNinja.GameEngine.GameObject;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public abstract class Scene extends JPanel {
-    public ArrayList<MovingObject> objects = new ArrayList<>();
+    protected final ArrayList<GameObject> objects = new ArrayList<>();
 
-    public void addToScene(MovingObject object) {
+    protected void addToScene(GameObject object) {
         objects.add(object);
     }
 
-    // Factory method for MovingObjects
-    public MovingObject getModel(String object) throws NullPointerException {
-        if (object.equals("Fruit")) {
-            return new Fruit();
+    public static AbstractFactory getFactory(String choice){
+
+        if("HUD".equalsIgnoreCase(choice)){
+            return new HUDFactory();
         }
+        else if("Model".equalsIgnoreCase(choice)){
+            return new ModelFactory();
+        }
+
         return null;
     }
 
@@ -27,12 +35,16 @@ public abstract class Scene extends JPanel {
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;
 
-        for (MovingObject object : objects) {
+        for (GameObject object : objects) {
             object.draw(g2d);
         }
     }
 
-    abstract public void update(long elapsedTime);
-    abstract public void updateAtFixedRate();
-    abstract public void buildScene();
+    public void update() {
+        for (GameObject object : objects) {
+            object.update();
+        }
+    }
+    public abstract void buildScene();
+    public abstract void handleInput();
 }

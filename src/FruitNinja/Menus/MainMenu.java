@@ -1,8 +1,7 @@
 package FruitNinja.Menus;
 
 import FruitNinja.Game;
-import FruitNinja.GameEngine.FixedStepGameLoop;
-import FruitNinja.GameEngine.VariableStepGameLoop;
+import FruitNinja.GameEngine.GameLoop;
 import FruitNinja.Scenes.MainScene;
 
 import javax.swing.*;
@@ -29,18 +28,15 @@ public class MainMenu extends JPanel {
 
                 MainScene mainScene = new MainScene();
                 mainScene.setSize(gamePane.getSize());
-                VariableStepGameLoop variableStepGameLoop = new VariableStepGameLoop(mainScene);
-                FixedStepGameLoop fixedStepGameLoop = new FixedStepGameLoop(mainScene);
+                GameLoop gameLoop = new GameLoop(mainScene);
 
-                // show game
                 gamePane.add(mainScene);
                 gamePane.remove(mainMenu);
                 gamePane.revalidate();
 
-                // start thread / start game
-                variableStepGameLoop.run();
-                fixedStepGameLoop.run();
-            }
+                gameLoop.run();
+
+        }
         });
         add(button);
     }

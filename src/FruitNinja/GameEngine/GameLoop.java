@@ -1,16 +1,19 @@
 package FruitNinja.GameEngine;
 
+import FruitNinja.Scenes.MainScene;
 import FruitNinja.Scenes.Scene;
 
 import java.util.Random;
 
-public abstract class GameLoop {
+public class GameLoop {
 
     protected volatile Status status;
 
     private Thread gameThread;
 
     protected Scene scene;
+
+    protected boolean isSceneLoaded = false;
 
     public GameLoop() {
         status = Status.STOPPED;
@@ -22,9 +25,14 @@ public abstract class GameLoop {
     }
 
     public void run() {
+        scene.buildScene();
+
         status = Status.RUNNING;
         gameThread = new Thread(this::process);
         gameThread.start();
+
+        scene.handleInput();
+
     }
 
     public void stop() {
@@ -35,24 +43,40 @@ public abstract class GameLoop {
         return status == Status.RUNNING;
     }
 
-    protected void processInput() {
-        try {
-            var lag = new Random().nextInt(100) + 50;
-            Thread.sleep(lag);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
-
     protected void refreshScene() {
         scene.repaint();
         scene.revalidate();
     }
 
     protected void process() {
-        scene.buildScene();
-    }
+        long lastTime = System.nanoTime();
+        double amountOfTicks = 60.0;
+        double ns = 1000000000 / amountOfTicks;
+        double delta = 0;
+        long timer = System.currentTimeMillis();
+        int frames = 0;
 
+        while(isGameRunning()) {
+            long now = System.nanoTime();
+            delta += (now - lastTime) / ns;
+            lastTime = now;
+            while(delta >= 1) {
+                scene.update();
+                delta--;
+            }
+            if(isGameRunning())
+                refreshScene();
+            frames++;
+
+            if(System.currentTimeMillis() - timer > 1000) {
+                timer += 1000;
+                System.out.println("FPS: " + frames);
+                frames = 0;
+            }
+        }
+
+        stop();
+    };
 
     enum Status {
         RUNNING, STOPPED

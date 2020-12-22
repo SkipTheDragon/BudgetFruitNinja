@@ -7,7 +7,7 @@ import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
-public class Main {
+public class Window {
     public static Dimension windowSize = new Dimension(500, 500);
     public static Container contentPane;
 
@@ -30,7 +30,7 @@ public class Main {
             }
         });
        // Main.windowSize = Toolkit.getDefaultToolkit().getScreenSize();
-        jFrame.setPreferredSize(Main.windowSize);
+        jFrame.setPreferredSize(Window.windowSize);
         jFrame.setVisible(true);
         jFrame.pack();
     }
@@ -45,3 +45,12 @@ public class Main {
 
 // State for MovingObjects moving animations
 // Observer
+// Bridge
+
+/*
+        Access Modifier	within class	within package	outside package by subclass only	outside package
+        Private	    Y	N	N	N
+        Default	    Y	Y	N	N
+        Protected	Y	Y	Y	N
+        Public	    Y	Y	Y	Y
+*/

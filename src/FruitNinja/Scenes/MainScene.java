@@ -1,35 +1,68 @@
 package FruitNinja.Scenes;
 
-import FruitNinja.Models.MovingObject;
-import java.io.IOException;
+import FruitNinja.Assets.AbstractFactory;
+import FruitNinja.Assets.Model.Elements.Fruit;
+import FruitNinja.Assets.Model.ModelFactory;
+import FruitNinja.GameEngine.GameObject;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
+// handler
 public class MainScene extends Scene {
 
     public MainScene() {
-
     }
-
-    @Override
-    public void update(long elapsedTime) {
-
-    }
-
-    @Override
-    public void updateAtFixedRate() {
-
-    }
-
+    //create objects
     @Override
     public void buildScene() {
-        MovingObject fruit = getModel("Fruit");
-
-        try {
-            fruit.loadImage("/Users/leonard/Documents/Teme/IP/FruitNinja/src/FruitNinja/Models/Images/banana.png");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        AbstractFactory factory = getFactory("Model");
+        Fruit fruit = (Fruit) factory.create("Fruit");
+        fruit.setHeight(50);
+        fruit.setWidth(50);
+        fruit.setX(20);
+        fruit.setY(20);
+        fruit.setVelX(5);
+        fruit.setVelY(5);
 
         addToScene(fruit);
+    }
+
+    @Override
+    public void handleInput() {
+        this.addMouseListener(new MouseInput(this));
+    }
+
+    private static class MouseInput implements MouseListener {
+        Scene scene;
+
+        public MouseInput(Scene scene) {
+            this.scene = scene;
+        }
+
+        @Override
+        public void mouseClicked(MouseEvent e) {
+            System.out.println("MouseClicked at" + e.getPoint());
+        }
+
+        @Override
+        public void mousePressed(MouseEvent e) {
+
+        }
+
+        @Override
+        public void mouseReleased(MouseEvent e) {
+
+        }
+
+        @Override
+        public void mouseEntered(MouseEvent e) {
+
+        }
+
+        @Override
+        public void mouseExited(MouseEvent e) {
+
+        }
     }
 
 }

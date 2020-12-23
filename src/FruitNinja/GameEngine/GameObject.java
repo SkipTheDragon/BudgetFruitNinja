@@ -8,7 +8,7 @@ public abstract class GameObject {
     protected float x, y;
     protected float width,height;
     protected float velX, velY;
-    protected int updateRate;
+    public int updateRate = 1;
 
     public float getWidth() {
         return width;

@@ -3,6 +3,7 @@ package FruitNinja.Scenes;
 import FruitNinja.Assets.AbstractFactory;
 import FruitNinja.Assets.Model.Elements.Fruit;
 import FruitNinja.Assets.Model.Elements.SwordTrail;
+import FruitNinja.Assets.Model.ModelFactory;
 
 import javax.swing.event.MouseInputAdapter;
 import javax.swing.event.MouseInputListener;
@@ -23,16 +24,16 @@ public class MainScene extends Scene {
     public void buildScene() {
         AbstractFactory factory = getFactory("Model");
 
-//        for (int i = 0; i < 10; i++) {
-//            Fruit fruit = (Fruit) factory.create("Fruit");
-//            fruit.setHeight(50);
-//            fruit.setWidth(50);
-//            fruit.setX(ThreadLocalRandom.current().nextInt(this.getWidth()));
-//            fruit.setY(0);
-//            fruit.setVelX(ThreadLocalRandom.current().nextInt(5));
-//            fruit.setVelY(ThreadLocalRandom.current().nextInt(5));
-//            addToScene(fruit);
-//        }
+        for (int i = 0; i < 10; i++) {
+            Fruit fruit = (Fruit) factory.create("Fruit");
+            fruit.setHeight(50);
+            fruit.setWidth(50);
+            fruit.setX(ThreadLocalRandom.current().nextInt(this.getWidth()));
+            fruit.setY(0);
+            fruit.setVelX(ThreadLocalRandom.current().nextInt(5));
+            fruit.setVelY(ThreadLocalRandom.current().nextInt(5));
+            addToScene(fruit);
+        }
 
     }
 
@@ -62,8 +63,9 @@ public class MainScene extends Scene {
         @Override
         public void mouseReleased(MouseEvent e) {
             if(scene.objects.contains(swordTrail)) {
-                scene.removeFromScene(swordTrail);
-                swordTrail = (SwordTrail) getFactory("Model").create("SwordTrail");
+                swordTrail.clearTrail();
+                swordTrail.setX(0);
+                swordTrail.setY(0);
             }
         }
 
@@ -75,7 +77,6 @@ public class MainScene extends Scene {
 
             swordTrail.setX(e.getX());
             swordTrail.setY(e.getY());
-
         }
 
     }

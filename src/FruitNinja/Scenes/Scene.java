@@ -14,6 +14,7 @@ import java.util.ArrayList;
 
 public abstract class Scene extends JPanel {
     protected final ArrayList<GameObject> objects = new ArrayList<>();
+    private int updates = 0;
 
     protected void addToScene(GameObject object) {
         objects.add(object);
@@ -45,9 +46,17 @@ public abstract class Scene extends JPanel {
         }
     }
 
+    public void updateCounter() {
+        updates++;
+        if (updates == 100)
+            updates = 0;
+    }
+
     public void update() {
+        updateCounter();
         for (GameObject object : objects) {
-            object.update();
+            if (updates % object.updateRate == 0)
+                object.update();
         }
     }
     public abstract void buildScene();

@@ -2,26 +2,25 @@ package FruitNinja.Scenes;
 
 import FruitNinja.Assets.AbstractFactory;
 import FruitNinja.Assets.HUD.HUDFactory;
-import FruitNinja.Assets.Model.Elements.Fruit;
 import FruitNinja.Assets.Model.ModelFactory;
-import FruitNinja.Game;
 import FruitNinja.GameEngine.GameObject;
 
 import javax.swing.*;
 import java.awt.*;
-import java.io.IOException;
-import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.LinkedList;
 
 public abstract class Scene extends JPanel {
-    protected final ArrayList<GameObject> objects = new ArrayList<>();
+    protected final LinkedList<GameObject> array = new LinkedList<>();
+    protected final Iterator<GameObject> objects = array.iterator();
     private int updates = 0;
 
     protected void addToScene(GameObject object) {
-        objects.add(object);
+        array.add(object);
     }
 
     protected void removeFromScene(GameObject object) {
-        objects.remove(object);
+        array.remove(object);
     }
 
     public static AbstractFactory getFactory(String choice){
@@ -41,7 +40,7 @@ public abstract class Scene extends JPanel {
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;
 
-        for (GameObject object : objects) {
+        for (GameObject object : array) {
             object.draw(g2d);
         }
     }
@@ -54,7 +53,7 @@ public abstract class Scene extends JPanel {
 
     public void update() {
         updateCounter();
-        for (GameObject object : objects) {
+        for (GameObject object : array) {
             if (updates % object.updateRate == 0)
                 object.update();
         }

@@ -3,10 +3,9 @@ package FruitNinja.Scenes;
 import FruitNinja.Assets.AbstractFactory;
 import FruitNinja.Assets.Model.Elements.Fruit;
 import FruitNinja.Assets.Model.Elements.SwordTrail;
-import FruitNinja.Assets.Model.ModelFactory;
+import FruitNinja.GameEngine.GameObject;
 
 import javax.swing.event.MouseInputAdapter;
-import javax.swing.event.MouseInputListener;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -33,6 +32,7 @@ public class MainScene extends Scene {
             fruit.setVelX(ThreadLocalRandom.current().nextInt(5));
             fruit.setVelY(ThreadLocalRandom.current().nextInt(5));
             addToScene(fruit);
+
         }
 
     }
@@ -46,7 +46,7 @@ public class MainScene extends Scene {
 
     private static class MouseInput extends MouseInputAdapter implements MouseMotionListener {
         Scene scene;
-        SwordTrail swordTrail = (SwordTrail) getFactory("Model").create("SwordTrail");
+        public static SwordTrail swordTrail = (SwordTrail) getFactory("Model").create("SwordTrail");
 
         public MouseInput(Scene scene) {
             this.scene = scene;
@@ -62,7 +62,7 @@ public class MainScene extends Scene {
 
         @Override
         public void mouseReleased(MouseEvent e) {
-            if(scene.objects.contains(swordTrail)) {
+            if(scene.array.contains(swordTrail)) {
                 swordTrail.clearTrail();
                 swordTrail.setX(0);
                 swordTrail.setY(0);
@@ -71,12 +71,27 @@ public class MainScene extends Scene {
 
         @Override
         public void mouseDragged(MouseEvent e) {
-            if(!scene.objects.contains(swordTrail)) {
+            if(!scene.array.contains(swordTrail)) {
                 scene.addToScene(swordTrail);
             }
 
             swordTrail.setX(e.getX());
             swordTrail.setY(e.getY());
+
+            if(scene.array.contains(swordTrail)) {
+                for (GameObject object : scene.array) {
+                    if (object instanceof Fruit) {
+                        for (Point point : MouseInput.swordTrail.getState()) {
+                            if (point != null) {
+                                if (object.getBounds().intersects(new Rectangle(point.x, point.y, 1, 1))) {
+                                    ((Fruit) object).cut();
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
         }
 
     }

@@ -1,9 +1,6 @@
 package FruitNinja.GameEngine;
 
-import FruitNinja.Scenes.MainScene;
 import FruitNinja.Scenes.Scene;
-
-import java.util.Random;
 
 public class GameLoop {
 
@@ -12,8 +9,6 @@ public class GameLoop {
     private Thread gameThread;
 
     protected Scene scene;
-
-    protected boolean isSceneLoaded = false;
 
     public GameLoop() {
         status = Status.STOPPED;

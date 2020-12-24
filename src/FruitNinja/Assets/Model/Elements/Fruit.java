@@ -1,7 +1,7 @@
 package FruitNinja.Assets.Model.Elements;
 
-import FruitNinja.GameEngine.GameObject;
 import FruitNinja.Assets.Model.ModelFamily;
+import FruitNinja.GameEngine.GameObject;
 import FruitNinja.Window;
 
 import javax.imageio.ImageIO;
@@ -10,10 +10,10 @@ import java.io.File;
 import java.io.IOException;
 
 public class Fruit extends GameObject implements ModelFamily {
+    protected boolean isCut = false;
 
     public Fruit() throws IOException {
         this.texture = getTexture();
-        System.out.println("Fruit bro");
     }
 
     @Override
@@ -28,10 +28,19 @@ public class Fruit extends GameObject implements ModelFamily {
 
     @Override
     public void update() {
-        x += velX;
-        y += velY;
+        if (this.isCut) {
+            y += velY;
+            velY += 1;
+        } else {
+            x += velX;
+            y += velY;
 
-        if(y <= 0 || y >= Window.windowSize.height/2 - getHeight()) velY *= -1;
-        if(x <= 0 || x >= Window.windowSize.width - getWidth()) velX *= -1;
+            if(y <= 0 || y >= Window.windowSize.height/2 - getHeight()) velY *= -1;
+            if(x <= 0 || x >= Window.windowSize.width - getWidth()) velX *= -1;
+        }
+    }
+
+    public void cut() {
+        this.isCut = true;
     }
 }

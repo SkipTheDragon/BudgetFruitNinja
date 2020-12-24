@@ -10,15 +10,19 @@ import java.io.IOException;
 public class SwordTrail extends GameObject implements ModelFamily {
     protected Point[] state = new Point[5];
     public int updateRate = 1;
-    public int maxDistanceBetweenStates = 200;
+    public int maxDistanceBetweenStates = 100;
     @Override
     public Image getTexture() throws IOException {
         return null;
     }
 
+    public Point[] getState() {
+        return state;
+    }
+
     @Override
     public void draw(Graphics2D g) {
-        if (state[0] != null) {
+        if (state[0] != null && state[1] != null) {
             g.setColor(Color.BLACK);
             GeneralPath polyline = new GeneralPath(GeneralPath.WIND_EVEN_ODD, state.length);
             polyline.moveTo(state[0].x, state[0].y);
@@ -31,11 +35,13 @@ public class SwordTrail extends GameObject implements ModelFamily {
             g.draw(polyline);
         }
     }
+
     public void clearTrail() {
         for (int j = state.length-1; j > 0; j--) {
             state[j] = null;
         }
     }
+
     @Override
     public void update() {
         for (int i = 0; i < state.length; i++) {
@@ -59,4 +65,5 @@ public class SwordTrail extends GameObject implements ModelFamily {
             }
         }
     }
+
 }

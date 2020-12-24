@@ -28,16 +28,23 @@ public class Fruit extends GameObject implements ModelFamily {
 
     @Override
     public void update() {
-        if (this.isCut) {
-            y += velY;
-            velY += 1;
-        } else {
-            x += velX;
-            y += velY;
+        if (this.isCut || y <= Window.windowSize.height / 2) {
+            fall();
 
-            if(y <= 0 || y >= Window.windowSize.height/2 - getHeight()) velY *= -1;
-            if(x <= 0 || x >= Window.windowSize.width - getWidth()) velX *= -1;
+        } else {
+            propel();
         }
+    }
+
+    public void propel() {
+       // x += velX;
+        y += velY;
+        velY += -0.25;
+    }
+
+    public void fall() {
+        y += velY;
+        velY += 0.25;
     }
 
     public void cut() {

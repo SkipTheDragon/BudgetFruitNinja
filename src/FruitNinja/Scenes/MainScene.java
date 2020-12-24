@@ -28,11 +28,10 @@ public class MainScene extends Scene {
             fruit.setHeight(50);
             fruit.setWidth(50);
             fruit.setX(ThreadLocalRandom.current().nextInt(this.getWidth()));
-            fruit.setY(0);
-            fruit.setVelX(ThreadLocalRandom.current().nextInt(5));
-            fruit.setVelY(ThreadLocalRandom.current().nextInt(5));
+            fruit.setY(this.getHeight()- fruit.getHeight());
+            fruit.setVelX(ThreadLocalRandom.current().nextInt(1,5));
+            fruit.setVelY(ThreadLocalRandom.current().nextInt(1,5));
             addToScene(fruit);
-
         }
 
     }
@@ -51,14 +50,6 @@ public class MainScene extends Scene {
         public MouseInput(Scene scene) {
             this.scene = scene;
         }
-
-        @Override
-        public void mousePressed(MouseEvent e) {
-            Point pressed = e.getPoint();
-
-          //  scene.objects.removeIf(object -> object.getBounds().intersects(pressed.x, pressed.y,100, 20));
-
-       }
 
         @Override
         public void mouseReleased(MouseEvent e) {

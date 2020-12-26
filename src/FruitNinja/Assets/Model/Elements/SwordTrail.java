@@ -10,7 +10,8 @@ import java.io.IOException;
 public class SwordTrail extends GameObject implements ModelFamily {
     protected Point[] state = new Point[5];
     public int updateRate = 1;
-    public int maxDistanceBetweenStates = 100;
+
+    protected int maxDistanceBetweenStates = 100;
     @Override
     public Image getTexture() throws IOException {
         return null;
@@ -31,7 +32,6 @@ public class SwordTrail extends GameObject implements ModelFamily {
                 if (state[index] != null)
                 polyline.lineTo(state[index].x, state[index].y);
             }
-
             g.draw(polyline);
         }
     }

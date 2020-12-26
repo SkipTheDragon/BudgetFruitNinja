@@ -7,20 +7,19 @@ import FruitNinja.GameEngine.GameObject;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.Iterator;
-import java.util.LinkedList;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public abstract class Scene extends JPanel {
-    protected final LinkedList<GameObject> array = new LinkedList<>();
-    protected final Iterator<GameObject> objects = array.iterator();
+    protected final CopyOnWriteArrayList<GameObject> objects = new CopyOnWriteArrayList<>();
     private int updates = 0;
+    protected int howManyIterations = 100;
 
     protected void addToScene(GameObject object) {
-        array.add(object);
+        objects.add(object);
     }
 
     protected void removeFromScene(GameObject object) {
-        array.remove(object);
+        objects.remove(object);
     }
 
     public static AbstractFactory getFactory(String choice){
@@ -40,7 +39,7 @@ public abstract class Scene extends JPanel {
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;
 
-        for (GameObject object : array) {
+        for (GameObject object : objects) {
             object.draw(g2d);
         }
     }
@@ -51,9 +50,10 @@ public abstract class Scene extends JPanel {
             updates = 0;
     }
 
+
     public void update() {
         updateCounter();
-        for (GameObject object : array) {
+        for (GameObject object : objects) {
             if (updates % object.updateRate == 0)
                 object.update();
         }

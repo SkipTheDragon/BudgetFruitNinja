@@ -7,8 +7,8 @@ import java.io.IOException;
 public abstract class GameObject {
     protected Image texture = null;
     protected float x, y;
-    protected float width,height;
-    protected float velX, velY;
+    protected float width=50,height=50;
+    protected float velX = 1, velY = 1;
     public int updateRate = 1;
 
     public float getWidth() {

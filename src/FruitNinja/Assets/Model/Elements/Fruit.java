@@ -8,9 +8,17 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class Fruit extends GameObject implements ModelFamily {
     protected boolean isCut = false;
+    protected boolean decliningSide = ThreadLocalRandom.current().nextBoolean();
+    public static int spawnProbability = 30;
+    public States state;
+
+    public enum States {
+        FALLING,PROPELING
+    }
 
     public Fruit() throws IOException {
         this.texture = getTexture();
@@ -29,25 +37,45 @@ public class Fruit extends GameObject implements ModelFamily {
     @Override
     public void update() {
         if (this.isCut || y <= Window.windowSize.height / 2) {
-            fall();
-
+            fall(0.25);
         } else {
-            propel();
+            propel(0.25);
         }
     }
 
-    public void propel() {
-       // x += velX;
+    public void propel(double velocityY) {
         y += velY;
-        velY += -0.25;
+        velY += -velocityY;
+        if (isInsideScene()) {
+            decline(0.005);
+        }
+        state = States.PROPELING;
     }
 
-    public void fall() {
+    public void fall(double velocityY) {
         y += velY;
-        velY += 0.25;
+        velY += velocityY;
+
+        if (isInsideScene()) {
+            decline(0.02);
+        }
+        state = States.FALLING;
+    }
+
+    public void decline(double velocityX) {
+        if (decliningSide) {
+            x += velX;
+        } else {
+            x -= velX;
+        }
+        velX += velocityX;
     }
 
     public void cut() {
         this.isCut = true;
+    }
+
+    public boolean isInsideScene() {
+        return x <= Window.windowSize.width - getWidth() && x >= 0 && y <= Window.windowSize.height + getHeight() * 10 && y >= 0;
     }
 }

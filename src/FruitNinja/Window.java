@@ -43,9 +43,8 @@ public class Window {
 // Singleton for having access to game ongoing events  -- implemented
 // Game Loop -- implemented
 // Update Method -- implemented
-
-// Memento for replay
-// Bridge
+// FlyWeight -- implemented
+// Observer
 
 /*
         Access Modifier	within class	within package	outside package by subclass only	outside package

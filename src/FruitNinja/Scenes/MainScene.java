@@ -14,26 +14,48 @@ import java.util.concurrent.ThreadLocalRandom;
 
 // handler
 public class MainScene extends Scene {
-
     public MainScene() {
         this.requestFocus();
     }
     //create objects
+
     @Override
     public void buildScene() {
-        AbstractFactory factory = getFactory("Model");
 
-        for (int i = 0; i < 10; i++) {
-            Fruit fruit = (Fruit) factory.create("Fruit");
-            fruit.setHeight(50);
-            fruit.setWidth(50);
-            fruit.setX(ThreadLocalRandom.current().nextInt(this.getWidth()));
-            fruit.setY(this.getHeight()- fruit.getHeight());
-            fruit.setVelX(ThreadLocalRandom.current().nextInt(1,5));
-            fruit.setVelY(ThreadLocalRandom.current().nextInt(1,5));
-            addToScene(fruit);
+    }
+
+    public void spawnObject() {
+        if (ThreadLocalRandom.current().nextInt(1,howManyIterations) == Fruit.spawnProbability) {
+            spawnFruit();
         }
+    }
 
+    public void spawner() {
+        for (int i = 0; i < howManyIterations + 1; i++) {
+            if (i == howManyIterations) {
+                spawnObject();
+            }
+        }
+    }
+
+    @Override
+    public void update() {
+        super.update();
+        spawner();
+
+        removeOutsideSceneObjects();
+    }
+
+    public void removeOutsideSceneObjects() {
+        objects.removeIf(e -> !((Fruit)e).isInsideScene());
+    }
+
+    public void spawnFruit() {
+        AbstractFactory factory = getFactory("Model");
+        Fruit fruit = (Fruit) factory.create("Fruit");
+        fruit.setX(ThreadLocalRandom.current().nextInt(this.getWidth()));
+        fruit.setY(this.getHeight()- fruit.getHeight());
+        addToScene(fruit);
     }
 
     @Override
@@ -53,7 +75,7 @@ public class MainScene extends Scene {
 
         @Override
         public void mouseReleased(MouseEvent e) {
-            if(scene.array.contains(swordTrail)) {
+            if(scene.objects.contains(swordTrail)) {
                 swordTrail.clearTrail();
                 swordTrail.setX(0);
                 swordTrail.setY(0);
@@ -62,21 +84,21 @@ public class MainScene extends Scene {
 
         @Override
         public void mouseDragged(MouseEvent e) {
-            if(!scene.array.contains(swordTrail)) {
+            if(!scene.objects.contains(swordTrail)) {
                 scene.addToScene(swordTrail);
             }
 
             swordTrail.setX(e.getX());
             swordTrail.setY(e.getY());
 
-            if(scene.array.contains(swordTrail)) {
-                for (GameObject object : scene.array) {
+            if(scene.objects.contains(swordTrail)) {
+                for (GameObject object : scene.objects) {
                     if (object instanceof Fruit) {
-                        for (Point point : MouseInput.swordTrail.getState()) {
-                            if (point != null) {
-                                if (object.getBounds().intersects(new Rectangle(point.x, point.y, 1, 1))) {
-                                    ((Fruit) object).cut();
-                                }
+                        Point[] point = MouseInput.swordTrail.getState();
+                        if (point[point.length / 2] != null) {
+                            Point lastPoint = point[point.length /2];
+                            if (object.getBounds().intersects(new Rectangle(lastPoint.x, lastPoint.y, 1, 1))) {
+                                ((Fruit) object).cut();
                             }
                         }
                     }

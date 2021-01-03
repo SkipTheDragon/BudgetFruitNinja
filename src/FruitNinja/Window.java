@@ -8,7 +8,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 public class Window {
-    public static Dimension windowSize = new Dimension(500, 500);
+    public static Dimension windowSize = new Dimension(800, 800);
     public static Container contentPane;
 
     public static void main(String[] args) {
@@ -30,6 +30,7 @@ public class Window {
             }
         });
        // Main.windowSize = Toolkit.getDefaultToolkit().getScreenSize();
+        jFrame.setResizable(false);
         jFrame.setPreferredSize(Window.windowSize);
         jFrame.setVisible(true);
         jFrame.pack();

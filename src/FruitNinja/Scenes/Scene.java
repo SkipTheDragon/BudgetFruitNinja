@@ -12,7 +12,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public abstract class Scene extends JPanel {
     protected final CopyOnWriteArrayList<GameObject> objects = new CopyOnWriteArrayList<>();
     private int updates = 0;
-    protected int howManyIterations = 100;
+    protected int minChance = 100;
 
     protected void addToScene(GameObject object) {
         objects.add(object);
@@ -59,5 +59,5 @@ public abstract class Scene extends JPanel {
         }
     }
     public abstract void buildScene();
-    public abstract void handleInput();
+    public abstract void setInput();
 }

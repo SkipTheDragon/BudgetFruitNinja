@@ -1,37 +1,34 @@
 package FruitNinja.Assets.Model.Elements;
 
 import FruitNinja.Assets.Model.ModelFamily;
-import FruitNinja.GameEngine.GameObject;
+import FruitNinja.Game;
+import FruitNinja.Scenes.MouseInput;
 import FruitNinja.Window;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.event.InputEvent;
 import java.io.File;
 import java.io.IOException;
-import java.util.concurrent.ThreadLocalRandom;
 
-public class Fruit extends GameObject implements ModelFamily {
-    protected boolean isCut = false;
-    protected boolean decliningSide = ThreadLocalRandom.current().nextBoolean();
-    public static int spawnProbability = 30;
-    public States state;
-
-    public enum States {
-        FALLING,PROPELING
-    }
+public class Fruit extends MotionElement implements ModelFamily {
 
     public Fruit() throws IOException {
-        this.texture = getTexture();
+        setTextures();
     }
 
     @Override
-    public Image getTexture() throws IOException {
-        return ImageIO.read(new File("/Users/leonard/Documents/Teme/IP/FruitNinja/src/FruitNinja/Assets/Images/banana.png"));
+    public void setTextures() throws IOException {
+        textures.put("default", ImageIO.read(new File("src/FruitNinja/Assets/Images/banana.png")));
+        textures.put("cut", ImageIO.read(new File("src/FruitNinja/Assets/Images/cutBanana.png")));
     }
 
     @Override
     public void draw(Graphics2D g)  {
-        g.drawImage(texture, (int)getX(), (int)getY(), (int)getWidth(), (int)getHeight(), null);
+        if (isCut)
+            g.drawImage(textures.get("cut"), (int)getX(), (int)getY(), (int)getWidth(), (int)getHeight(), null);
+        else
+            g.drawImage(textures.get("default"), (int)getX(), (int)getY(), (int)getWidth(), (int)getHeight(), null);
     }
 
     @Override
@@ -41,41 +38,17 @@ public class Fruit extends GameObject implements ModelFamily {
         } else {
             propel(0.25);
         }
-    }
 
-    public void propel(double velocityY) {
-        y += velY;
-        velY += -velocityY;
-        if (isInsideScene()) {
-            decline(0.005);
+        if (!isInsideScene()) {
+            Game.getStatus().setLives(Game.getStatus().getLives() - 1);
         }
-        state = States.PROPELING;
     }
 
-    public void fall(double velocityY) {
-        y += velY;
-        velY += velocityY;
+    @Override
+    public void handleInput(InputEvent e) {
+        super.handleInput(e);
+        if (MouseInput.mouseStatus == MouseInput.MouseStatus.DRAGGED) {
 
-        if (isInsideScene()) {
-            decline(0.02);
         }
-        state = States.FALLING;
-    }
-
-    public void decline(double velocityX) {
-        if (decliningSide) {
-            x += velX;
-        } else {
-            x -= velX;
-        }
-        velX += velocityX;
-    }
-
-    public void cut() {
-        this.isCut = true;
-    }
-
-    public boolean isInsideScene() {
-        return x <= Window.windowSize.width - getWidth() && x >= 0 && y <= Window.windowSize.height + getHeight() * 10 && y >= 0;
     }
 }

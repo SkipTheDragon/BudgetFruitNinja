@@ -5,9 +5,11 @@ import java.awt.*;
 public final class Game {
 
     private int score = 0;
-    private int mistakesAllowed = 3;
+    private int lives = 3;
     private int level = 0;
     private int comboBonus = 0;
+    private int scoreForLevelUp = 60;
+
     private Container contentPane;
 
     // The field must be declared volatile (the value might change between accesses)
@@ -16,6 +18,10 @@ public final class Game {
     private static volatile Game instance;
 
     private Game() {
+    }
+
+    public int getScoreForLevelUp() {
+        return scoreForLevelUp;
     }
 
     public int getLevel() {
@@ -34,12 +40,12 @@ public final class Game {
         this.comboBonus = comboBonus;
     }
 
-    public int getMistakesAllowed() {
-        return mistakesAllowed;
+    public int getLives() {
+        return lives;
     }
 
-    public void setMistakesAllowed(int mistakesAllowed) {
-        this.mistakesAllowed = mistakesAllowed;
+    public void setLives(int lives) {
+        this.lives = lives;
     }
 
     public int getScore() {

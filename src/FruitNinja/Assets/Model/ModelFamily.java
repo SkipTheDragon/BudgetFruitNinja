@@ -1,6 +1,7 @@
 package FruitNinja.Assets.Model;
 
 public interface ModelFamily {
+
     float getVelX();
     void setVelX(float velX);
     float getVelY();

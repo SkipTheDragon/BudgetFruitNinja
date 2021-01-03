@@ -1,15 +1,31 @@
 package FruitNinja.GameEngine;
 
-import javax.swing.*;
+import FruitNinja.Window;
+
 import java.awt.*;
+import java.awt.event.InputEvent;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public abstract class GameObject {
-    protected Image texture = null;
+    protected Map<String,Image> textures = new ConcurrentHashMap<>();
     protected float x, y;
     protected float width=50,height=50;
     protected float velX = 1, velY = 1;
+    protected Point spawnPoint;
     public int updateRate = 1;
+
+    public void setSpawnPoint(Point spawnPoint) {
+        this.spawnPoint = spawnPoint;
+        this.x = spawnPoint.x;
+        this.y = spawnPoint.y;
+    }
+
+    public Point getSpawnPoint() {
+        return spawnPoint;
+    }
 
     public float getWidth() {
         return width;
@@ -63,8 +79,17 @@ public abstract class GameObject {
         return new Rectangle((int)x, (int)y, (int) width, (int)height);
     }
 
-    public abstract Image getTexture() throws IOException;
+    public boolean isInsideScene() {
+        return x <= FruitNinja.Window.windowSize.width - getWidth() && x >= 0 && y <= Window.windowSize.height + getHeight() * 10 && y >= 0;
+    }
+
+    public Map<String, Image> getTextures() {
+        return textures;
+    }
+
+    public abstract void setTextures() throws IOException;
     public abstract void draw(Graphics2D g);
     public abstract void update();
+    public abstract void handleInput(InputEvent e);
 }
 

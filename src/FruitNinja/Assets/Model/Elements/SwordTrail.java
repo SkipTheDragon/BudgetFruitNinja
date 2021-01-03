@@ -4,6 +4,8 @@ import FruitNinja.Assets.Model.ModelFamily;
 import FruitNinja.GameEngine.GameObject;
 
 import java.awt.*;
+import java.awt.event.InputEvent;
+import java.awt.event.MouseEvent;
 import java.awt.geom.GeneralPath;
 import java.io.IOException;
 
@@ -13,8 +15,7 @@ public class SwordTrail extends GameObject implements ModelFamily {
 
     protected int maxDistanceBetweenStates = 100;
     @Override
-    public Image getTexture() throws IOException {
-        return null;
+    public void setTextures() throws IOException {
     }
 
     public Point[] getState() {
@@ -63,6 +64,15 @@ public class SwordTrail extends GameObject implements ModelFamily {
             } else {
                 state[i] = currentPos;
             }
+        }
+    }
+
+    @Override
+    public void handleInput(InputEvent e) {
+        if (e instanceof MouseEvent) {
+            MouseEvent mouseEvent = (MouseEvent) e;
+            setX(mouseEvent.getX());
+            setY(mouseEvent.getY());
         }
     }
 

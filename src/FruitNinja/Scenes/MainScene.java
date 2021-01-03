@@ -1,13 +1,12 @@
 package FruitNinja.Scenes;
 
 import FruitNinja.Assets.AbstractFactory;
+import FruitNinja.Assets.HUD.Elements.StatusBar;
 import FruitNinja.Assets.Model.Elements.Fruit;
-import FruitNinja.Assets.Model.Elements.SwordTrail;
 import FruitNinja.GameEngine.GameObject;
 
-import javax.swing.event.MouseInputAdapter;
 import java.awt.*;
-import java.awt.event.MouseEvent;
+import java.awt.event.InputEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.util.concurrent.ThreadLocalRandom;
@@ -17,24 +16,20 @@ public class MainScene extends Scene {
     public MainScene() {
         this.requestFocus();
     }
-    //create objects
 
     @Override
     public void buildScene() {
-
+        AbstractFactory factory = getFactory("HUD");
+        StatusBar statusBar = (StatusBar) factory.create("StatusBar");
+        statusBar.setSpawnPoint(new Point(50,50));
+        addToScene(statusBar);
+        addToScene(MouseInput.swordTrail);
     }
 
-    public void spawnObject() {
-        if (ThreadLocalRandom.current().nextInt(1,howManyIterations) == Fruit.spawnProbability) {
-            spawnFruit();
-        }
-    }
 
     public void spawner() {
-        for (int i = 0; i < howManyIterations + 1; i++) {
-            if (i == howManyIterations) {
-                spawnObject();
-            }
+        if (ThreadLocalRandom.current().nextInt(Fruit.spawnProbability + 1) == 0) {
+            spawnFruit();
         }
     }
 
@@ -42,71 +37,41 @@ public class MainScene extends Scene {
     public void update() {
         super.update();
         spawner();
-
         removeOutsideSceneObjects();
     }
 
     public void removeOutsideSceneObjects() {
-        objects.removeIf(e -> !((Fruit)e).isInsideScene());
+        objects.removeIf(e -> e instanceof Fruit && !((Fruit)e).isInsideScene());
+    }
+
+    public Point spawnZone(GameObject object) {
+        int bound = this.getWidth() - (this.getWidth() / 3);
+        int spawn = ThreadLocalRandom.current().nextInt(this.getWidth() / 3, bound);
+
+        return new Point(spawn, (int) (this.getHeight()- object.getHeight()));
     }
 
     public void spawnFruit() {
         AbstractFactory factory = getFactory("Model");
         Fruit fruit = (Fruit) factory.create("Fruit");
-        fruit.setX(ThreadLocalRandom.current().nextInt(this.getWidth()));
-        fruit.setY(this.getHeight()- fruit.getHeight());
+
+        fruit.setSpawnPoint(spawnZone(fruit));
+        fruit.setDecliningSideBySpawnPoint();
+
         addToScene(fruit);
     }
 
     @Override
-    public void handleInput() {
+    public void setInput() {
         MouseListener mouseListener = new MouseInput(this);
         this.addMouseListener(mouseListener);
         this.addMouseMotionListener((MouseMotionListener) mouseListener);
     }
 
-    private static class MouseInput extends MouseInputAdapter implements MouseMotionListener {
-        Scene scene;
-        public static SwordTrail swordTrail = (SwordTrail) getFactory("Model").create("SwordTrail");
-
-        public MouseInput(Scene scene) {
-            this.scene = scene;
+    public void handleInput(InputEvent e) {
+        for (GameObject object : objects) {
+            object.handleInput(e);
         }
-
-        @Override
-        public void mouseReleased(MouseEvent e) {
-            if(scene.objects.contains(swordTrail)) {
-                swordTrail.clearTrail();
-                swordTrail.setX(0);
-                swordTrail.setY(0);
-            }
-        }
-
-        @Override
-        public void mouseDragged(MouseEvent e) {
-            if(!scene.objects.contains(swordTrail)) {
-                scene.addToScene(swordTrail);
-            }
-
-            swordTrail.setX(e.getX());
-            swordTrail.setY(e.getY());
-
-            if(scene.objects.contains(swordTrail)) {
-                for (GameObject object : scene.objects) {
-                    if (object instanceof Fruit) {
-                        Point[] point = MouseInput.swordTrail.getState();
-                        if (point[point.length / 2] != null) {
-                            Point lastPoint = point[point.length /2];
-                            if (object.getBounds().intersects(new Rectangle(lastPoint.x, lastPoint.y, 1, 1))) {
-                                ((Fruit) object).cut();
-                            }
-                        }
-                    }
-                }
-            }
-
-        }
-
     }
 
 }

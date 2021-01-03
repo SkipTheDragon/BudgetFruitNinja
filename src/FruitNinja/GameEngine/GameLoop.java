@@ -26,7 +26,7 @@ public class GameLoop {
         gameThread = new Thread(this::process);
         gameThread.start();
 
-        scene.handleInput();
+        scene.setInput();
 
     }
 

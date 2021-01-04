@@ -2,12 +2,10 @@ package FruitNinja.Assets.Model.Elements;
 
 import FruitNinja.Assets.Model.ModelFamily;
 import FruitNinja.Game;
-import FruitNinja.Scenes.MouseInput;
 import FruitNinja.Window;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
-import java.awt.event.InputEvent;
 import java.io.File;
 import java.io.IOException;
 
@@ -25,10 +23,7 @@ public class Fruit extends MotionElement implements ModelFamily {
 
     @Override
     public void draw(Graphics2D g)  {
-        if (isCut)
-            g.drawImage(textures.get("cut"), (int)getX(), (int)getY(), (int)getWidth(), (int)getHeight(), null);
-        else
-            g.drawImage(textures.get("default"), (int)getX(), (int)getY(), (int)getWidth(), (int)getHeight(), null);
+        g.drawImage(isCut ? textures.get("cut") : textures.get("default"), (int)getX(), (int)getY(), (int)getWidth(), (int)getHeight(), null);
     }
 
     @Override
@@ -39,16 +34,8 @@ public class Fruit extends MotionElement implements ModelFamily {
             propel(0.25);
         }
 
-        if (!isInsideScene()) {
+        if (!isInsideScene() && !isCut) {
             Game.getStatus().setLives(Game.getStatus().getLives() - 1);
-        }
-    }
-
-    @Override
-    public void handleInput(InputEvent e) {
-        super.handleInput(e);
-        if (MouseInput.mouseStatus == MouseInput.MouseStatus.DRAGGED) {
-
         }
     }
 }

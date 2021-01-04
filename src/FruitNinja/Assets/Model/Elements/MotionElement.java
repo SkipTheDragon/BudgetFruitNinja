@@ -2,7 +2,7 @@ package FruitNinja.Assets.Model.Elements;
 
 import FruitNinja.Game;
 import FruitNinja.GameEngine.GameObject;
-import FruitNinja.Scenes.MouseInput;
+import FruitNinja.Events.MouseInput;
 import FruitNinja.Window;
 
 import java.awt.*;
@@ -62,6 +62,7 @@ public class MotionElement extends GameObject {
 
     @Override
     public void setTextures() throws IOException {
+
     }
 
     @Override

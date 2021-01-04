@@ -1,43 +1,27 @@
 package FruitNinja.Menus;
 
-import FruitNinja.Game;
-import FruitNinja.GameEngine.GameLoop;
-import FruitNinja.Scenes.MainScene;
+import FruitNinja.Events.EventListener;
+import FruitNinja.Events.EventManager;
+import FruitNinja.Events.StartGameAction;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
-public class MainMenu extends JPanel {
+public class MainMenu extends Menu {
+    private Container container;
 
-    public MainMenu() {
-
+    public MainMenu(EventManager<EventListener> eventManager,Container container) {
+        super(eventManager, container);
+        this.container = container;
     }
 
     public void buildUi() {
         setPreferredSize(new Dimension(750,750));
         setBackground(Color.BLACK);
-        JButton button = new JButton("StartGame");
-        MainMenu mainMenu = this;
+        JButton button = new JButton("Start Game");
 
-        button.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                Container gamePane = Game.getStatus().getContentPane();
+        button.addActionListener(new StartGameAction(container,eventManager));
 
-                MainScene mainScene = new MainScene();
-                mainScene.setSize(gamePane.getSize());
-                GameLoop gameLoop = new GameLoop(mainScene);
-
-                gamePane.add(mainScene);
-                gamePane.remove(mainMenu);
-                gamePane.revalidate();
-
-                gameLoop.run();
-
-        }
-        });
         add(button);
     }
 }

@@ -1,5 +1,7 @@
 package FruitNinja;
 
+import FruitNinja.Events.EventListener;
+import FruitNinja.Events.EventManager;
 import FruitNinja.Menus.MainMenu;
 
 import javax.swing.*;
@@ -7,33 +9,38 @@ import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
-public class Window {
+public class Window extends JFrame {
     public static Dimension windowSize = new Dimension(800, 800);
-    public static Container contentPane;
+
+    public Window(String title) throws HeadlessException {
+        super(title);
+    }
 
     public static void main(String[] args) {
-        JFrame jFrame = new JFrame("Fruit Ninja");
-        Game.getStatus().setContentPane(jFrame.getContentPane());
+        EventManager<EventListener> gameEventManager = new EventManager<>("gameEnded");
 
-        MainMenu mainMenu = new MainMenu();
+        Window Window = new Window("Fruit Ninja");
+        Game.getStatus().setContentPane(Window.getContentPane());
+
+        MainMenu mainMenu = new MainMenu(gameEventManager, Window.getContentPane());
         mainMenu.buildUi();
 
-        jFrame.add(mainMenu);
-        jFrame.addWindowListener(new WindowAdapter() {
+        Window.add(mainMenu);
+        Window.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
-                if(JOptionPane.showConfirmDialog(jFrame, "Are you sure ?") == JOptionPane.OK_OPTION){
-                    jFrame.setVisible(false);
-                    jFrame.dispose();
+                if(JOptionPane.showConfirmDialog(Window, "Are you sure ?") == JOptionPane.OK_OPTION){
+                    Window.setVisible(false);
+                    Window.dispose();
                     System.exit(0);
                 }
             }
         });
        // Main.windowSize = Toolkit.getDefaultToolkit().getScreenSize();
-        jFrame.setResizable(false);
-        jFrame.setPreferredSize(Window.windowSize);
-        jFrame.setVisible(true);
-        jFrame.pack();
+        Window.setResizable(false);
+        Window.setPreferredSize(windowSize);
+        Window.setVisible(true);
+        Window.pack();
     }
 }
 
@@ -45,7 +52,6 @@ public class Window {
 // Game Loop -- implemented
 // Update Method -- implemented
 // FlyWeight -- implemented
-// Observer
 
 /*
         Access Modifier	within class	within package	outside package by subclass only	outside package

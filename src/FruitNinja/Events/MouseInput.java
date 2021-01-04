@@ -1,6 +1,8 @@
-package FruitNinja.Scenes;
+package FruitNinja.Events;
 
 import FruitNinja.Assets.Model.Elements.SwordTrail;
+import FruitNinja.Scenes.MainScene;
+import FruitNinja.Scenes.Scene;
 
 import javax.swing.event.MouseInputAdapter;
 import java.awt.event.MouseEvent;

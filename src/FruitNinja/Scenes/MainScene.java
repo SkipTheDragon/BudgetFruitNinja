@@ -3,6 +3,9 @@ package FruitNinja.Scenes;
 import FruitNinja.Assets.AbstractFactory;
 import FruitNinja.Assets.HUD.Elements.StatusBar;
 import FruitNinja.Assets.Model.Elements.Fruit;
+import FruitNinja.Assets.Model.Elements.MotionElement;
+import FruitNinja.Events.MouseInput;
+import FruitNinja.Game;
 import FruitNinja.GameEngine.GameObject;
 
 import java.awt.*;
@@ -38,10 +41,15 @@ public class MainScene extends Scene {
         super.update();
         spawner();
         removeOutsideSceneObjects();
+
+        if (Game.getStatus().getLives() == 0) {
+            eventManager.notify("gameEnded");
+        }
+
     }
 
     public void removeOutsideSceneObjects() {
-        objects.removeIf(e -> e instanceof Fruit && !((Fruit)e).isInsideScene());
+        objects.removeIf(e -> e instanceof MotionElement && !e.isInsideScene());
     }
 
     public Point spawnZone(GameObject object) {

@@ -1,6 +1,13 @@
 package FruitNinja.GameEngine;
 
+import FruitNinja.Events.EventListener;
+import FruitNinja.Events.EventManager;
+import FruitNinja.Game;
+import FruitNinja.Menus.GameOver;
 import FruitNinja.Scenes.Scene;
+import FruitNinja.Window;
+
+import java.awt.*;
 
 public class GameLoop {
 
@@ -14,6 +21,7 @@ public class GameLoop {
         status = Status.STOPPED;
     }
 
+
     public GameLoop(Scene scene) {
         this();
         this.scene = scene;
@@ -21,13 +29,11 @@ public class GameLoop {
 
     public void run() {
         scene.buildScene();
-
         status = Status.RUNNING;
         gameThread = new Thread(this::process);
         gameThread.start();
 
         scene.setInput();
-
     }
 
     public void stop() {

@@ -3,6 +3,8 @@ package FruitNinja.Scenes;
 import FruitNinja.Assets.AbstractFactory;
 import FruitNinja.Assets.HUD.HUDFactory;
 import FruitNinja.Assets.Model.ModelFactory;
+import FruitNinja.Events.EventListener;
+import FruitNinja.Events.EventManager;
 import FruitNinja.GameEngine.GameObject;
 
 import javax.swing.*;
@@ -13,6 +15,7 @@ public abstract class Scene extends JPanel {
     protected final CopyOnWriteArrayList<GameObject> objects = new CopyOnWriteArrayList<>();
     private int updates = 0;
     protected int minChance = 100;
+    protected EventManager<EventListener> eventManager;
 
     protected void addToScene(GameObject object) {
         objects.add(object);
@@ -60,4 +63,8 @@ public abstract class Scene extends JPanel {
     }
     public abstract void buildScene();
     public abstract void setInput();
+
+    public void passEventManager(EventManager eventManager) {
+        this.eventManager = eventManager;
+    }
 }

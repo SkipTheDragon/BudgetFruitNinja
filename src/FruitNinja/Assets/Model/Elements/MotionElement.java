@@ -1,8 +1,8 @@
 package FruitNinja.Assets.Model.Elements;
 
+import FruitNinja.Events.MouseInput;
 import FruitNinja.Game;
 import FruitNinja.GameEngine.GameObject;
-import FruitNinja.Events.MouseInput;
 import FruitNinja.Window;
 
 import java.awt.*;

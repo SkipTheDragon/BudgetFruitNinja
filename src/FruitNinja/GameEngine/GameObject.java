@@ -5,7 +5,6 @@ import FruitNinja.Window;
 import java.awt.*;
 import java.awt.event.InputEvent;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 

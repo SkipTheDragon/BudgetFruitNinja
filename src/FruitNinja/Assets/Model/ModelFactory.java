@@ -5,8 +5,6 @@ import FruitNinja.Assets.Model.Elements.Bomb;
 import FruitNinja.Assets.Model.Elements.Fruit;
 import FruitNinja.Assets.Model.Elements.SwordTrail;
 
-import java.io.IOException;
-
 public class ModelFactory implements AbstractFactory<ModelFamily> {
     @Override
     public ModelFamily create(String asset) {

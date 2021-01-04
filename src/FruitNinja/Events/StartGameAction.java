@@ -1,8 +1,5 @@
 package FruitNinja.Events;
 
-import FruitNinja.Events.EventListener;
-import FruitNinja.Events.EventManager;
-import FruitNinja.Game;
 import FruitNinja.GameEngine.GameLoop;
 import FruitNinja.Menus.GameOver;
 import FruitNinja.Scenes.MainScene;

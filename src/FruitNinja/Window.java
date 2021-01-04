@@ -51,8 +51,9 @@ public class Window extends JFrame {
 // Singleton for having access to game ongoing events  -- implemented
 // Game Loop -- implemented
 // Update Method -- implemented
-// FlyWeight -- implemented
+// Observer -- implemented
 
+//Fly weight maybe
 /*
         Access Modifier	within class	within package	outside package by subclass only	outside package
         Private	    Y	N	N	N

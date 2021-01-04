@@ -1,12 +1,9 @@
 package FruitNinja.Assets.Model.Elements;
 
 import FruitNinja.Assets.Model.ModelFamily;
-import FruitNinja.Game;
 import FruitNinja.Window;
 
 import javax.imageio.ImageIO;
-import java.awt.*;
-import java.awt.geom.AffineTransform;
 import java.io.File;
 import java.io.IOException;
 

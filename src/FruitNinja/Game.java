@@ -5,7 +5,7 @@ import java.awt.*;
 public final class Game {
 
     private int score = 0;
-    private int lives = 3;
+    private int lives = 80000;
     private int level = 0;
     private int comboBonus = 0;
     private int scoreForLevelUp = 60;
@@ -18,6 +18,14 @@ public final class Game {
     private static volatile Game instance;
 
     private Game() {
+    }
+
+    public void resetGame() {
+        this.score = 0;
+        this.lives = 3;
+        this.level = 0;
+        this.comboBonus = 0;
+        this.scoreForLevelUp = 60;
     }
 
     public int getScoreForLevelUp() {

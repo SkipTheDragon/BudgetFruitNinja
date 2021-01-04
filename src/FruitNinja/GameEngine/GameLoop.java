@@ -1,13 +1,7 @@
 package FruitNinja.GameEngine;
 
-import FruitNinja.Events.EventListener;
-import FruitNinja.Events.EventManager;
-import FruitNinja.Game;
-import FruitNinja.Menus.GameOver;
 import FruitNinja.Scenes.Scene;
-import FruitNinja.Window;
 
-import java.awt.*;
 
 public class GameLoop {
 

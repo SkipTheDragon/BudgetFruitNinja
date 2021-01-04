@@ -14,13 +14,13 @@ public class GameOver extends Menu {
 
     private final String text;
     private String pointsText = "test";
-    private JButton jButton = new JButton("Play again");
+    private final JButton jButton = new JButton("Play again");
 
     public GameOver(EventManager<EventListener> eventManager, Container container) {
         super(eventManager, container);
         text = "Game Over ";
         this.pointsText = "You scored " + Game.getStatus().getScore() + " points";
-        Game.getStatus().setLives(3);
+        Game.getStatus().resetGame();
     }
 
     @Override

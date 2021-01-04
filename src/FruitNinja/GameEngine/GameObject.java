@@ -16,7 +16,7 @@ public abstract class GameObject {
     protected float velX = 1, velY = 1;
     protected Point spawnPoint;
     public int updateRate = 1;
-
+    protected boolean texturesLoaded;
     public void setSpawnPoint(Point spawnPoint) {
         this.spawnPoint = spawnPoint;
         this.x = spawnPoint.x;
@@ -80,7 +80,7 @@ public abstract class GameObject {
     }
 
     public boolean isInsideScene() {
-        return x <= FruitNinja.Window.windowSize.width - getWidth() && x >= 0 && y <= Window.windowSize.height + getHeight() * 10 && y >= 0;
+        return x <= Window.windowSize.width - width && x >= 0 && y <= Window.windowSize.height + height && y >= 0;
     }
 
     public Map<String, Image> getTextures() {
@@ -91,5 +91,11 @@ public abstract class GameObject {
     public abstract void draw(Graphics2D g);
     public abstract void update();
     public abstract void handleInput(InputEvent e);
+
+    @Override
+    public String toString() {
+        String className = this.getClass().toString();
+        return className.substring(className.lastIndexOf(".") + 1);
+    }
 }
 

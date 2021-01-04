@@ -10,26 +10,30 @@ import java.awt.geom.AffineTransform;
 import java.io.File;
 import java.io.IOException;
 
-public class Fruit extends MotionElement implements ModelFamily {
+public class Bomb extends MotionElement implements ModelFamily {
+    public int spawnProbability = 150;
+    protected int rotation = 180;
 
     @Override
     public void setTextures() throws IOException {
-        textures.put("default", ImageIO.read(new File("src/FruitNinja/Assets/Images/banana.png")));
+        textures.put("default", ImageIO.read(new File("src/FruitNinja/Assets/Images/bomb.png")));
         textures.put("cut", ImageIO.read(new File("src/FruitNinja/Assets/Images/cutBanana.png")));
         texturesLoaded = true;
+    }
+    public int getSpawnProbability() {
+        return spawnProbability;
+    }
+
+    @Override
+    public void draw(Graphics2D g) {
+        super.draw(g);
     }
 
     @Override
     public void update() {
         super.update();
-//        if (!isInsideScene() && !isCut) {
-//            Game.getStatus().setLives(Game.getStatus().getLives() - 1);
-//        }
-
-        if (y >= Window.windowSize.height / 2 + height && state != States.FALLING) {
-            propel(0.25);
-        } else {
-            fall(0.35);
+        if (isInsideScene() && isCut) {
+            Game.getStatus().setLives(0);
         }
     }
 }

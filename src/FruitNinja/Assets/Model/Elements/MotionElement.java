@@ -7,13 +7,15 @@ import FruitNinja.Window;
 
 import java.awt.*;
 import java.awt.event.InputEvent;
+import java.awt.geom.AffineTransform;
 import java.io.IOException;
 
-public class MotionElement extends GameObject {
+public  class MotionElement extends GameObject {
     protected boolean isCut = false;
     protected boolean canBeCut = true;
     protected boolean decliningSide;
-    public static int spawnProbability = 30;
+    protected int spawnProbability = 30;
+    protected int rotation = 50;
     public States state;
 
     public enum States {
@@ -28,6 +30,11 @@ public class MotionElement extends GameObject {
         }
         state = States.PROPELLING;
     }
+
+    public int getSpawnProbability() {
+        return spawnProbability;
+    }
+
 
     public void fall(double velocityY) {
         y += velY;
@@ -67,12 +74,31 @@ public class MotionElement extends GameObject {
 
     @Override
     public void draw(Graphics2D g) {
+        if (!texturesLoaded) {
+            try {
+                setTextures();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
 
+        AffineTransform old = g.getTransform();
+        if (decliningSide) {
+            g.rotate(Math.toRadians((velX) / 2) * +rotation, x, y);
+        } else {
+            g.rotate(Math.toRadians((velX) / 2) * -rotation, x, y);
+        }
+        g.drawImage(isCut ? textures.get("cut") : textures.get("default"), (int) getX(), (int) getY(), (int) getWidth(), (int) getHeight(), null);
+        g.setTransform(old);
     }
 
     @Override
     public void update() {
-
+        if (y >= Window.windowSize.height / 2 + height && state != States.FALLING) {
+            propel(0.05);
+        } else {
+            fall(0.10);
+        }
     }
 
     public void collision() {
@@ -101,4 +127,6 @@ public class MotionElement extends GameObject {
             }
         }
     }
+
+
 }

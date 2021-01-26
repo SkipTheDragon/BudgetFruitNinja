@@ -10,7 +10,7 @@ import java.awt.event.InputEvent;
 import java.awt.geom.AffineTransform;
 import java.io.IOException;
 
-public  class MotionElement extends GameObject {
+public class MotionElement extends GameObject {
     protected boolean isCut = false;
     protected boolean canBeCut = true;
     protected boolean decliningSide;
@@ -84,9 +84,9 @@ public  class MotionElement extends GameObject {
 
         AffineTransform old = g.getTransform();
         if (decliningSide) {
-            g.rotate(Math.toRadians((velX) / 2) * +rotation, x, y);
+            g.rotate(Math.toRadians((velX) / 2) * + rotation, x, y);
         } else {
-            g.rotate(Math.toRadians((velX) / 2) * -rotation, x, y);
+            g.rotate(Math.toRadians((velX) / 2) * - rotation, x, y);
         }
         g.drawImage(isCut ? textures.get("cut") : textures.get("default"), (int) getX(), (int) getY(), (int) getWidth(), (int) getHeight(), null);
         g.setTransform(old);
@@ -127,6 +127,4 @@ public  class MotionElement extends GameObject {
             }
         }
     }
-
-
 }

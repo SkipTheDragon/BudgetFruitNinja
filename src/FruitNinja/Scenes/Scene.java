@@ -7,8 +7,11 @@ import FruitNinja.Events.EventListener;
 import FruitNinja.Events.EventManager;
 import FruitNinja.GameEngine.GameObject;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.io.File;
+import java.io.IOException;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public abstract class Scene extends JPanel {
@@ -17,16 +20,15 @@ public abstract class Scene extends JPanel {
     protected int minChance = 100;
     protected EventManager<EventListener> eventManager;
 
-    protected void addToScene(GameObject object) {
+    public void addToScene(GameObject object) {
         objects.add(object);
     }
 
-    protected void removeFromScene(GameObject object) {
+    public void removeFromScene(GameObject object) {
         objects.remove(object);
     }
 
     public static AbstractFactory getFactory(String choice){
-
         if("HUD".equalsIgnoreCase(choice)){
             return new HUDFactory();
         }
@@ -41,7 +43,11 @@ public abstract class Scene extends JPanel {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;
-
+        try {
+            g.drawImage(ImageIO.read(new File("src/FruitNinja/Assets/Images/bg.png")), 0, 0, getWidth(),getHeight(),null);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         for (GameObject object : objects) {
             object.draw(g2d);
         }
@@ -61,6 +67,7 @@ public abstract class Scene extends JPanel {
                 object.update();
         }
     }
+
     public abstract void buildScene();
     public abstract void setInput();
 

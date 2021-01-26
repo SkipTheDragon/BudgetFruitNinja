@@ -18,6 +18,7 @@ public class Bomb extends MotionElement implements ModelFamily {
         textures.put("cut", ImageIO.read(new File("src/FruitNinja/Assets/Images/cutBanana.png")));
         texturesLoaded = true;
     }
+
     public int getSpawnProbability() {
         return spawnProbability;
     }

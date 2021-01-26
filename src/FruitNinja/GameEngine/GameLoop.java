@@ -71,7 +71,7 @@ public class GameLoop {
         }
 
         stop();
-    };
+    }
 
     enum Status {
         RUNNING, STOPPED

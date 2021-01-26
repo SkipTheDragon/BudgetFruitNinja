@@ -10,7 +10,7 @@ import java.awt.geom.GeneralPath;
 import java.io.IOException;
 
 public class SwordTrail extends GameObject implements ModelFamily {
-    protected Point[] state = new Point[5];
+    protected Point[] state = new Point[10];
     public int updateRate = 1;
 
     protected int maxDistanceBetweenStates = 100;
@@ -25,7 +25,7 @@ public class SwordTrail extends GameObject implements ModelFamily {
     @Override
     public void draw(Graphics2D g) {
         if (state[0] != null && state[1] != null) {
-            g.setColor(Color.BLACK);
+            g.setColor(Color.WHITE);
             GeneralPath polyline = new GeneralPath(GeneralPath.WIND_EVEN_ODD, state.length);
             polyline.moveTo(state[0].x, state[0].y);
 
@@ -33,6 +33,7 @@ public class SwordTrail extends GameObject implements ModelFamily {
                 if (state[index] != null)
                 polyline.lineTo(state[index].x, state[index].y);
             }
+
             g.draw(polyline);
         }
     }

@@ -5,7 +5,7 @@ import java.awt.*;
 public final class Game {
 
     private int score = 0;
-    private int lives = 80000;
+    private int lives = 3;
     private int level = 0;
     private int comboBonus = 0;
     private int scoreForLevelUp = 60;

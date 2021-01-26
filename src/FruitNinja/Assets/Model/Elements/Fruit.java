@@ -4,15 +4,14 @@ import FruitNinja.Assets.Model.ModelFamily;
 import FruitNinja.Window;
 
 import javax.imageio.ImageIO;
-import java.io.File;
 import java.io.IOException;
 
 public class Fruit extends MotionElement implements ModelFamily {
 
     @Override
     public void setTextures() throws IOException {
-        textures.put("default", ImageIO.read(new File("src/FruitNinja/Assets/Images/banana.png")));
-        textures.put("cut", ImageIO.read(new File("src/FruitNinja/Assets/Images/cutBanana.png")));
+        textures.put("default", ImageIO.read(getClass().getResourceAsStream("/FruitNinja/Assets/Images/banana.png")));
+        textures.put("cut", ImageIO.read(getClass().getResourceAsStream("/FruitNinja/Assets/Images/cutBanana.png")));
         texturesLoaded = true;
     }
 

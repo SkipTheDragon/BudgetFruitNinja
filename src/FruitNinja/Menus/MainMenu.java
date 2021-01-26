@@ -7,7 +7,6 @@ import FruitNinja.Events.StartGameAction;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.io.File;
 import java.io.IOException;
 
 public class MainMenu extends Menu {
@@ -33,7 +32,7 @@ public class MainMenu extends Menu {
 
         super.paintComponent(g);
         try {
-            g.drawImage(ImageIO.read(new File("src/FruitNinja/Assets/Images/bg.png")), 0, 0, getWidth(),getHeight(),null);
+            g.drawImage(ImageIO.read(getClass().getResourceAsStream("/FruitNinja/Assets/Images/bg.png")), 0, 0, getWidth(),getHeight(),null);
         } catch (IOException e) {
             e.printStackTrace();
         }

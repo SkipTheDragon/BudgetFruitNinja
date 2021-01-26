@@ -5,7 +5,6 @@ import FruitNinja.Game;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
-import java.io.File;
 import java.io.IOException;
 
 public class Bomb extends MotionElement implements ModelFamily {
@@ -14,8 +13,8 @@ public class Bomb extends MotionElement implements ModelFamily {
 
     @Override
     public void setTextures() throws IOException {
-        textures.put("default", ImageIO.read(new File("src/FruitNinja/Assets/Images/bomb.png")));
-        textures.put("cut", ImageIO.read(new File("src/FruitNinja/Assets/Images/cutBanana.png")));
+        textures.put("default", ImageIO.read(getClass().getResourceAsStream("/FruitNinja/Assets/Images/bomb.png")));
+        textures.put("cut", ImageIO.read(getClass().getResourceAsStream("/FruitNinja/Assets/Images/cutBanana.png")));
         texturesLoaded = true;
     }
 

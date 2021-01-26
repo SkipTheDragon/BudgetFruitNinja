@@ -10,7 +10,6 @@ import FruitNinja.GameEngine.GameObject;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.io.File;
 import java.io.IOException;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -44,7 +43,7 @@ public abstract class Scene extends JPanel {
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;
         try {
-            g.drawImage(ImageIO.read(new File("src/FruitNinja/Assets/Images/bg.png")), 0, 0, getWidth(),getHeight(),null);
+            g.drawImage(ImageIO.read(getClass().getResourceAsStream("/FruitNinja/Assets/Images/bg.png")), 0, 0, getWidth(),getHeight(),null);
         } catch (IOException e) {
             e.printStackTrace();
         }

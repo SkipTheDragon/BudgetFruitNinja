@@ -1,12 +1,6 @@
-import FruitNinja.Assets.Model.Elements.Fruit;
-import FruitNinja.Game;
+import fruitninja.Game;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.Assertions.*;
-
-import java.awt.*;
-import java.awt.event.InputEvent;
-import java.io.IOException;
 
 public class Singleton {
     @Test

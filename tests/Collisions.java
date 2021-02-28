@@ -1,16 +1,8 @@
-import FruitNinja.Assets.Model.Elements.Fruit;
-import FruitNinja.GameEngine.GameLoop;
-import FruitNinja.GameEngine.GameObject;
-import FruitNinja.Scenes.MainScene;
+import fruitninja.assets.model.elements.Fruit;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.Assertions.*;
 
 import java.awt.*;
-import java.awt.event.InputEvent;
-import java.io.IOException;
 
 public class Collisions {
     @Test
